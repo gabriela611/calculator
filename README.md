@@ -133,3 +133,24 @@ npm test
 3. **Percentage Operation Convention**: Percentage calculation follows `(a / 100) * b` where the first operand is the percentage rate and the second is the base value.
 4. **Unary vs. Binary Operation UI Flow**: Binary operations (`+`, `-`, `*`, `/`, `^`, `%`) wait for a second operand, while unary operations (`sqrt`) execute immediately on the active display value.
 5. **Unified Multi-Stage Docker Container**: A single production container uses multi-stage builds to compile the Vite static assets and the Go binary, serving both via Nginx on port `8080` with an internal reverse proxy for `/api/`.
+
+---
+
+## AI Prompts & Workflow Guidance
+
+During development, AI tooling was guided, directed, and corrected through iterative prompt instructions to enforce architectural patterns, resolve edge cases, and ensure clean deployment:
+
+1. **Architecture Setup & API Contract Guidance**:
+   - *"Scaffold a full-stack calculator monorepo with React TypeScript in `frontend/` and Go in `backend/`. Define an explicit API contract for `POST /api/v1/calculate` returning distinct `400 Bad Request` for validation errors and `422 Unprocessable Entity` for mathematical domain errors."*
+
+2. **Backend Error Taxonomy Correction**:
+   - *"The backend handler shouldn't return generic 500 status codes for bad inputs. Ensure missing operations/operands return `400` with structured error details, while division by zero and negative square root return `422` with clear error messages."*
+
+3. **Frontend State & Unary/Binary UI Flow Guidance**:
+   - *"Decouple the calculator UI logic into a custom hook `useCalculator.ts`. Ensure binary operations (`+`, `-`, `*`, `/`, `^`, `%`) store state and wait for the second operand, while unary operations like `sqrt` trigger calculation immediately on the current display value."*
+
+4. **Docker Multi-Stage Build & Entrypoint Correction**:
+   - *"Refine the multi-stage Dockerfile to build Vite static assets and the Go server binary in isolation. Configure Nginx to serve static files on port 8080 and proxy `/api/` requests to the Go backend running on port 8081 via `entrypoint.sh`."*
+
+5. **Testing & Final Branding Correction**:
+   - *"Write table-driven unit tests in Go covering all 7 operations and validation edge cases, alongside Vitest component tests. Update the HTML page title to 'calculator' and set the favicon to a pink addition (+) icon."*
